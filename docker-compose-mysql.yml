@@ -1,0 +1,18 @@
+#####################################################
+# Imagem utilizada: https://hub.docker.com/_/mysql/
+#####################################################
+version: '3.1'
+
+services:
+  database:
+    image: mysql:8.0 # Versao do MySql
+    environment:
+      MYSQL_ROOT_PASSWORD: p@ssw0rd  # Senha Padrao
+      MYSQL_DATABASE: MyFirstAPI # Nome do database que será criado na inicializacao
+    ports:
+      - 3306:3306  # Porta de execucao da instancia do MySql. O primeiro parametro diz respeito a porta do host(maquina que executa o docker), o segundo parametro a porta dentro do container
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d # Executa um script de inicializacao onde cria-se a tabela pessoa e insere alguns registros. ver na pasta database
+
+  # Esta composicao de execucao nao esta mantendo o estado do banco mysql em um volume local. Assim, todas as vezes que o container
+  # for finalizado, os dados se perderao.
